@@ -27,6 +27,11 @@ function findPositionsOfToken(text: string, token: string): Match[] {
   return results;
 }
 
+export function findMatches(text: string, query :string) {
+  const tokens = tokenizer.tokenize(query);
+  return findPositionsOfAllTokens(text, tokens);
+}
+
 function findPositionsOfAllTokens(text: string, tokens: string[]) {
   const lowerCaseText = text.toLowerCase();
   return tokens.reduce<Match[]>((result, token) => {
@@ -90,5 +95,6 @@ export default {
   createHighlightList,
   createHighlightListFromTokens,
   stringContainsAnyOfQuery,
-  stringContainsAnyTokens
+  stringContainsAnyTokens,
+  findMatches
 };
