@@ -1,19 +1,20 @@
-import highlighter from './highlighter';
-import tokenizer from './tokenizer';
-import DOMHighlighter from './DOMHighlighter';
-
-export const createHighlightList = highlighter.createHighlightList
-export const createHighlightListFromTokens = highlighter.createHighlightListFromTokens
-export const tokenize = tokenizer.tokenize
-export const highlightElement = DOMHighlighter.highlightHTMLElement
-export const highlightElementWithTokens = DOMHighlighter.highlightHTMLElementWithTokens
+import { Match, Tokenizer } from "./types";
+import { tokenize as defaultTokenizer } from "./tokenizer";
+import highlighter from "./highlighter";
+import DOMHighlighter from "./DOMHighlighter";
 
 export default {
-  createHighlightList: highlighter.createHighlightList,
-  createHighlightListFromTokens: highlighter.createHighlightListFromTokens,
-  tokenize: tokenizer.tokenize,
-  stringContainsAnyOfQuery: highlighter.stringContainsAnyOfQuery,
-  stringContainsAnyOfTokens: highlighter.stringContainsAnyTokens,
-  highlightElement: DOMHighlighter.highlightHTMLElement,
-  highlightElementWithTokens: DOMHighlighter.highlightHTMLElementWithTokens
+
+  findMatches(text: string, query: string, tokenizer: Tokenizer = defaultTokenizer) {
+    const queryTokens = tokenizer(query)
+    return highlighter.findPositionsOfAllTokens(text, queryTokens)
+  },
+  highlightList(text: string, matches: Match[]) {
+    return highlighter.createHighlightListFromMatches(text, matches)
+  },
+  highlightHTMLElement(element: HTMLElement, query: string, tokenizer: Tokenizer = defaultTokenizer) {
+    const queryTokens = tokenizer(query)
+    return DOMHighlighter.highlightHTMLElementWithTokens(element, queryTokens)
+  }
+
 }

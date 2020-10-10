@@ -11,3 +11,5 @@ export type Match = { start: number; length: number }
  * without having to expose the application to xss injection.
  */
 export type HighlightList = { value: string; highlighted: boolean }[]
+
+export type MatchMiddleware = (match: { start: number, length: number }, text: string) => null | {start: number, length: number}
