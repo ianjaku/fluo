@@ -9,7 +9,7 @@ export default {
     const queryTokens = tokenizer(query)
     return highlighter.findPositionsOfAllTokens(text, queryTokens)
   },
-  highlightList(text: string, matches: Match[]) {
+  highlights(text: string, matches: Match[]) {
     return highlighter.createHighlightListFromMatches(text, matches)
   },
   highlightHTMLElement(element: HTMLElement, query: string, tokenizer: Tokenizer = defaultTokenizer) {
